@@ -23,7 +23,7 @@ const RecommendationsSection = () => {
     );
   }
 
-  const { personalized = [], trending = [], seasonal = [], recentlyViewed = [] } = data;
+  const { personalized = [], trending = [], seasonal = [], recentlyViewed = [] } = data || {};
 
   return (
     <div className="flex flex-col gap-10">
