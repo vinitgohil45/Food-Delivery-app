@@ -15,12 +15,20 @@ const app = express();
 app.use(helmet());
 
 // 2. CORS Configuration
-const allowedOrigins = [config.clientUrl];
+const allowedOrigins = config.clientUrl.split(',').map(url => url.trim());
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      if (!origin) {
+        return callback(null, true);
+      }
+      
+      const isAllowed = allowedOrigins.includes(origin) || 
+                        origin.endsWith('.vercel.app') || 
+                        origin.startsWith('http://localhost:');
+                        
+      if (isAllowed) {
         callback(null, true);
       } else {
         callback(new Error('Blocked by CORS policy'));
