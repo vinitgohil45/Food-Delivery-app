@@ -21,7 +21,7 @@ export const SocketProvider = ({ children }) => {
 
     const token = localStorage.getItem('accessToken');
     // Connect to backend server using proxy routing or port 5000 fallback
-    const socketUrl = window.location.origin;
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || import.meta.env.VITE_API_URL?.replace('/api/v1', '') || window.location.origin;
     const newSocket = io(socketUrl, {
       auth: { token },
       transports: ['websocket'],
