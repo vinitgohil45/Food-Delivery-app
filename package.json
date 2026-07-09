@@ -1,0 +1,26 @@
+{
+  "name": "foodhub-root",
+  "version": "1.0.0",
+  "description": "Root configuration and automation scripts for FoodHub - Food Delivery Platform",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev": "concurrently --kill-others-on-fail \"npm run dev:backend\" \"npm run dev:frontend\""
+  },
+  "keywords": [
+    "food-delivery",
+    "react",
+    "express",
+    "mongodb",
+    "socket.io",
+    "stripe",
+    "razorpay"
+  ],
+  "author": "Antigravity AI",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

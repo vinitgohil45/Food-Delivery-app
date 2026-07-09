@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Local MongoDB Instance
+  mongodb:
+    image: mongo:6.0
+    container_name: foodhub_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - foodhub_data:/data/db
+    networks:
+      - foodhub_network
+    environment:
+      - MONGO_INITDB_DATABASE=foodhub
+
+  # Mongo Express - Web UI for MongoDB administration
+  mongo-express:
+    image: mongo-express:1.0.0-alpha.4
+    container_name: foodhub_db_admin
+    depends_on:
+      - mongodb
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=pass
+    networks:
+      - foodhub_network
+
+volumes:
+  foodhub_data:
+    driver: local
+
+networks:
+  foodhub_network:
+    driver: bridge
